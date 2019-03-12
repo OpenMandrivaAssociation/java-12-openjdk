@@ -1,0 +1,88 @@
+
+# HG changeset patch
+# User andrew
+# Date 1478057514 0
+# Node ID 1c4d5cb2096ae55106111da200b0bcad304f650c
+# Parent  3d53f19b48384e5252f4ec8891f7a3a82d77af2a
+PR3183: Support Fedora/RHEL system crypto policy
+diff -r 3d53f19b4838 -r 1c4d5cb2096a src/java.base/share/classes/java/security/Security.java
+--- a/src/java.base/share/classes/java/security/Security.java	Wed Oct 26 03:51:39 2016 +0100
++++ b/src/java.base/share/classes/java/security/Security.java	Wed Nov 02 03:31:54 2016 +0000
+@@ -43,6 +43,9 @@
+  * implementation-specific location, which is typically the properties file
+  * {@code conf/security/java.security} in the Java installation directory.
+  *
++ * <p>Additional default values of security properties are read from a
++ * system-specific location, if available.</p>
++ *
+  * @author Benjamin Renaud
+  * @since 1.1
+  */
+@@ -52,6 +55,10 @@
+     private static final Debug sdebug =
+                         Debug.getInstance("properties");
+ 
++    /* System property file*/
++    private static final String SYSTEM_PROPERTIES =
++        "/etc/crypto-policies/back-ends/java.config";
++
+     /* The java.security properties */
+     private static Properties props;
+ 
+@@ -93,6 +100,7 @@
+                 if (sdebug != null) {
+                     sdebug.println("reading security properties file: " +
+                                 propFile);
++                    sdebug.println(props.toString());
+                 }
+             } catch (IOException e) {
+                 if (sdebug != null) {
+@@ -114,6 +122,31 @@
+         }
+ 
+         if ("true".equalsIgnoreCase(props.getProperty
++                ("security.useSystemPropertiesFile"))) {
++
++            // now load the system file, if it exists, so its values
++            // will win if they conflict with the earlier values
++            try (BufferedInputStream bis =
++                 new BufferedInputStream(new FileInputStream(SYSTEM_PROPERTIES))) {
++                props.load(bis);
++                loadedProps = true;
++
++                if (sdebug != null) {
++                    sdebug.println("reading system security properties file " +
++                                   SYSTEM_PROPERTIES);
++                    sdebug.println(props.toString());
++                }
++            } catch (IOException e) {
++                if (sdebug != null) {
++                    sdebug.println
++                        ("unable to load security properties from " +
++                         SYSTEM_PROPERTIES);
++                    e.printStackTrace();
++                }
++            }
++        }
++
++        if ("true".equalsIgnoreCase(props.getProperty
+                 ("security.overridePropertiesFile"))) {
+ 
+             String extraPropFile = System.getProperty
+diff -r 3d53f19b4838 -r 1c4d5cb2096a src/java.base/share/conf/security/java.security
+--- a/src/java.base/share/conf/security/java.security	Wed Oct 26 03:51:39 2016 +0100
++++ b/src/java.base/share/conf/security/java.security	Wed Nov 02 03:31:54 2016 +0000
+@@ -276,6 +276,13 @@
+ security.overridePropertiesFile=true
+ 
+ #
++# Determines whether this properties file will be appended to
++# using the system properties file stored at
++# /etc/crypto-policies/back-ends/java.config
++#
++security.useSystemPropertiesFile=true
++
++#
+ # Determines the default key and trust manager factory algorithms for
+ # the javax.net.ssl package.
+ #

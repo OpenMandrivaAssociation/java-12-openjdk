@@ -1,0 +1,39 @@
+diff -up java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/cpu/aarch64/aarch64.ad.omv~ java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/cpu/aarch64/aarch64.ad
+--- java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/cpu/aarch64/aarch64.ad.omv~	2019-01-31 03:16:45.555650736 +0100
++++ java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/cpu/aarch64/aarch64.ad	2019-01-31 03:18:33.133049050 +0100
+@@ -15126,7 +15126,7 @@ instruct compF_reg_zero(rFlagsReg cr, vR
+   format %{ "fcmps $src1, 0.0" %}
+ 
+   ins_encode %{
+-    __ fcmps(as_FloatRegister($src1$$reg), 0.0D);
++    __ fcmps(as_FloatRegister($src1$$reg), 0.0);
+   %}
+ 
+   ins_pipe(pipe_class_compare);
+@@ -15155,7 +15155,7 @@ instruct compD_reg_zero(rFlagsReg cr, vR
+   format %{ "fcmpd $src1, 0.0" %}
+ 
+   ins_encode %{
+-    __ fcmpd(as_FloatRegister($src1$$reg), 0.0D);
++    __ fcmpd(as_FloatRegister($src1$$reg), 0.0);
+   %}
+ 
+   ins_pipe(pipe_class_compare);
+@@ -15231,7 +15231,7 @@ instruct compF3_reg_immF0(iRegINoSp dst,
+     Label done;
+     FloatRegister s1 = as_FloatRegister($src1$$reg);
+     Register d = as_Register($dst$$reg);
+-    __ fcmps(s1, 0.0D);
++    __ fcmps(s1, 0.0);
+     // installs 0 if EQ else -1
+     __ csinvw(d, zr, zr, Assembler::EQ);
+     // keeps -1 if less or unordered else installs 1
+@@ -15258,7 +15258,7 @@ instruct compD3_reg_immD0(iRegINoSp dst,
+     Label done;
+     FloatRegister s1 = as_FloatRegister($src1$$reg);
+     Register d = as_Register($dst$$reg);
+-    __ fcmpd(s1, 0.0D);
++    __ fcmpd(s1, 0.0);
+     // installs 0 if EQ else -1
+     __ csinvw(d, zr, zr, Assembler::EQ);
+     // keeps -1 if less or unordered else installs 1

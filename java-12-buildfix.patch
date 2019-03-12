@@ -1,0 +1,16 @@
+diff -up java-12-openjdk-12.30-2.x86_64/openjdk/src/hotspot/share/gc/g1/g1CodeBlobClosure.cpp.omv~ java-12-openjdk-12.30-2.x86_64/openjdk/src/hotspot/share/gc/g1/g1CodeBlobClosure.cpp
+--- java-12-openjdk-12.30-2.x86_64/openjdk/src/hotspot/share/gc/g1/g1CodeBlobClosure.cpp.omv~	2019-02-15 23:07:42.313110651 +0100
++++ java-12-openjdk-12.30-2.x86_64/openjdk/src/hotspot/share/gc/g1/g1CodeBlobClosure.cpp	2019-02-15 23:07:56.346351166 +0100
+@@ -26,6 +26,7 @@
+ #include "code/nmethod.hpp"
+ #include "gc/g1/g1CodeBlobClosure.hpp"
+ #include "gc/g1/g1CollectedHeap.inline.hpp"
++#include "gc/g1/g1OopClosures.inline.hpp"
+ #include "gc/g1/heapRegion.hpp"
+ #include "gc/g1/heapRegionRemSet.hpp"
+ #include "oops/access.inline.hpp"
+@@ -62,4 +63,3 @@ void G1CodeBlobClosure::do_code_blob(Cod
+     }
+   }
+ }
+-

@@ -1,8 +1,14 @@
 %global _disable_ld_no_undefined 1
 %global _jvmdir /usr/lib/jvm
 
+%ifarch aarch64
+# On aarch64, gcc causes an Internal Compiler Error while building
+# hotspot/share/code/dependencies.hpp
+%bcond_with gcc
+%else
 # Build with gcc rather than clang
 %bcond_without gcc
+%endif
 # We don't usually need slowdebug builds
 %bcond_with slowdebug
 # Enable release builds by default on relevant arches.

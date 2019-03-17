@@ -298,7 +298,7 @@ if [ "%{?1}" == %{debug_suffix} ]; then
   let PRIORITY=PRIORITY-1
 fi
 
-ext=.gz
+ext=.xz
 alternatives \\
   --install %{_bindir}/java java %{jrebindir -- %{?1}}/java $PRIORITY  --family %{name}.%{_arch} \\
   --slave %{_jvmdir}/jre jre %{_jvmdir}/%{sdkdir -- %{?1}} \\
@@ -372,7 +372,7 @@ if [ "%{?1}" == %{debug_suffix} ]; then
   let PRIORITY=PRIORITY-1
 fi
 
-ext=.gz
+ext=.xz
 alternatives \\
   --install %{_bindir}/javac javac %{sdkbindir -- %{?1}}/javac $PRIORITY  --family %{name}.%{_arch} \\
   --slave %{_jvmdir}/java java_sdk %{_jvmdir}/%{sdkdir -- %{?1}} \\

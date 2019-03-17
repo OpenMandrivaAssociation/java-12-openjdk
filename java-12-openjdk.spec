@@ -927,7 +927,7 @@ Version: %{newjavaver}.%{buildver}
 # This package needs `.rolling` as part of Release so as to not conflict on install with
 # java-X-openjdk. I.e. when latest rolling release is also an LTS release packaged as
 # java-X-openjdk. See: https://bugzilla.redhat.com/show_bug.cgi?id=1647298
-Release: 1
+Release: 2
 
 Summary: %{origin_nice} Runtime Environment %{majorver}
 Group:   Development/Languages

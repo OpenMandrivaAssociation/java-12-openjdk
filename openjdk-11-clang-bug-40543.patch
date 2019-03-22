@@ -1,6 +1,6 @@
-diff -up java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/cpu/aarch64/aarch64.ad.omv~ java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/cpu/aarch64/aarch64.ad
---- java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/cpu/aarch64/aarch64.ad.omv~	2019-01-31 03:16:45.555650736 +0100
-+++ java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/cpu/aarch64/aarch64.ad	2019-01-31 03:18:33.133049050 +0100
+diff -up openjdk/src/hotspot/cpu/aarch64/aarch64.ad.omv~ openjdk/src/hotspot/cpu/aarch64/aarch64.ad
+--- openjdk/src/hotspot/cpu/aarch64/aarch64.ad.omv~	2019-01-31 03:16:45.555650736 +0100
++++ openjdk/src/hotspot/cpu/aarch64/aarch64.ad	2019-01-31 03:18:33.133049050 +0100
 @@ -15126,7 +15126,7 @@ instruct compF_reg_zero(rFlagsReg cr, vR
    format %{ "fcmps $src1, 0.0" %}
  

@@ -1,21 +1,23 @@
 #!/bin/sh
 
-ZIP_SRC=src/java.base/share/native/libzip/zlib/
+ZLIB_SRC=src/java.base/share/native/libzip/zlib/
 JPEG_SRC=src/java.desktop/share/native/libjavajpeg/
 GIF_SRC=src/java.desktop/share/native/libsplashscreen/giflib/
 PNG_SRC=src/java.desktop/share/native/libsplashscreen/libpng/
 LCMS_SRC=src/java.desktop/share/native/liblcms/
+FREETYPE_SRC=src/java.desktop/share/native/libfreetype/
+HARFBUZZ_SRC=src/java.desktop/share/native/libfontmanager/harfbuzz/
 
 cd openjdk
 
 echo "Removing built-in libs (they will be linked)"
 
 echo "Removing zlib"
-if [ ! -d ${ZIP_SRC} ]; then
-	echo "${ZIP_SRC} does not exist. Refusing to proceed."
+if [ ! -d ${ZLIB_SRC} ]; then
+	echo "${ZLIB_SRC} does not exist. Refusing to proceed."
 	exit 1
 fi	
-rm -rvf ${ZIP_SRC}
+rm -rvf ${ZLIB_SRC}
 
 echo "Removing libjpeg"
 if [ ! -f ${JPEG_SRC}/jdhuff.c ]; then # some file that sound definitely exist
@@ -127,3 +129,17 @@ rm -vf ${LCMS_SRC}/cmsxform.c
 rm -vf ${LCMS_SRC}/lcms2.h
 rm -vf ${LCMS_SRC}/lcms2_internal.h
 rm -vf ${LCMS_SRC}/lcms2_plugin.h
+
+echo "Removing freetype"
+if [ ! -d ${FREETYPE_SRC} ]; then
+	echo "${FREETYPE_SRC} does not exist. Refusing to proceed."
+	exit 1
+fi
+rm -rvf ${FREETYPE_SRC}
+
+echo "Removing harfbuzz"
+if [ ! -d ${HARFBUZZ_SRC} ]; then
+	echo "${HARFBUZZ_SRC} does not exist. Refusing to proceed."
+	exit 1
+fi
+rm -rvf ${HARFBUZZ_SRC}

@@ -1,6 +1,6 @@
-diff -up java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/cpu/aarch64/interp_masm_aarch64.hpp.omv~ java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/cpu/aarch64/interp_masm_aarch64.hpp
---- java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/cpu/aarch64/interp_masm_aarch64.hpp.omv~	2019-01-31 00:27:19.956081284 +0100
-+++ java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/cpu/aarch64/interp_masm_aarch64.hpp	2019-01-31 00:31:32.665951635 +0100
+diff -up openjdk/src/hotspot/cpu/aarch64/interp_masm_aarch64.hpp.omv~ openjdk/src/hotspot/cpu/aarch64/interp_masm_aarch64.hpp
+--- openjdk/src/hotspot/cpu/aarch64/interp_masm_aarch64.hpp.omv~	2019-01-31 00:27:19.956081284 +0100
++++ openjdk/src/hotspot/cpu/aarch64/interp_masm_aarch64.hpp	2019-01-31 00:31:32.665951635 +0100
 @@ -36,10 +36,6 @@ typedef ByteSize (*OffsetFunction)(uint)
  
  class InterpreterMacroAssembler: public MacroAssembler {
@@ -12,9 +12,9 @@ diff -up java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/cpu/aarch64/inte
    // Interpreter specific version of call_VM_base
    using MacroAssembler::call_VM_leaf_base;
  
-diff -up java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/os_cpu/linux_aarch64/copy_linux_aarch64.s.omv~ java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/os_cpu/linux_aarch64/copy_linux_aarch64.s
---- java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/os_cpu/linux_aarch64/copy_linux_aarch64.s.omv~	2019-01-31 16:34:42.455493214 +0100
-+++ java-11-openjdk-11.0.1.13-1.x86_64/openjdk/src/hotspot/os_cpu/linux_aarch64/copy_linux_aarch64.s	2019-01-31 16:35:32.520017071 +0100
+diff -up openjdk/src/hotspot/os_cpu/linux_aarch64/copy_linux_aarch64.s.omv~ openjdk/src/hotspot/os_cpu/linux_aarch64/copy_linux_aarch64.s
+--- openjdk/src/hotspot/os_cpu/linux_aarch64/copy_linux_aarch64.s.omv~	2019-01-31 16:34:42.455493214 +0100
++++ openjdk/src/hotspot/os_cpu/linux_aarch64/copy_linux_aarch64.s	2019-01-31 16:35:32.520017071 +0100
 @@ -159,7 +159,7 @@ bwd_copy_aligned:
          blo     bwd_copy_drain
  

@@ -1,0 +1,43 @@
+diff -up openjdk/make/lib/Awt2dLibraries.gmk.11~ openjdk/make/lib/Awt2dLibraries.gmk
+--- openjdk/make/lib/Awt2dLibraries.gmk.11~	2019-03-09 02:43:30.992842951 +0100
++++ openjdk/make/lib/Awt2dLibraries.gmk	2019-03-22 17:53:49.404830759 +0100
+@@ -532,6 +532,7 @@ endif
+ 
+ #### Begin harfbuzz configuration
+ 
++ifeq ($(HARFBUZZ_TO_USE), bundled)
+ HARFBUZZ_CFLAGS := -DHAVE_OT -DHAVE_FALLBACK -DHAVE_UCDN -DHAVE_ROUND
+ 
+ ifneq ($(OPENJDK_TARGET_OS), windows)
+@@ -552,20 +553,29 @@ ifneq ($(OPENJDK_TARGET_OS), macosx)
+ endif
+ # hb-ft.cc is not presently needed, and requires freetype 2.4.2 or later.
+ LIBFONTMANAGER_EXCLUDE_FILES += harfbuzz/hb-ft.cc
++else
++LIBFONTMANAGER_EXCLUDE_FILES += harfbuzz/hb-blob.cc harfbuzz/hb-buffer.cc harfbuzz/hb-buffer-serialize.cc harfbuzz/hb-common.cc harfbuzz/hb-coretext.cc harfbuzz/hb-face.cc harfbuzz/hb-fallback-shape.cc harfbuzz/hb-font.cc harfbuzz/hb-ft.cc harfbuzz/hb-map.cc harfbuzz/hb-ot-font.cc harfbuzz/hb-ot-layout.cc harfbuzz/hb-ot-map.cc harfbuzz/hb-ot-shape.cc harfbuzz/hb-ot-shape-complex-arabic.cc harfbuzz/hb-ot-shape-complex-default.cc harfbuzz/hb-ot-shape-complex-hangul.cc harfbuzz/hb-ot-shape-complex-hebrew.cc harfbuzz/hb-ot-shape-complex-indic.cc harfbuzz/hb-ot-shape-complex-indic-table.cc harfbuzz/hb-ot-shape-complex-khmer.cc harfbuzz/hb-ot-shape-complex-myanmar.cc harfbuzz/hb-ot-shape-complex-thai.cc harfbuzz/hb-ot-shape-complex-tibetan.cc harfbuzz/hb-ot-shape-complex-use.cc harfbuzz/hb-ot-shape-complex-use-table.cc harfbuzz/hb-ot-shape-fallback.cc harfbuzz/hb-ot-shape-normalize.cc harfbuzz/hb-ot-tag.cc harfbuzz/hb-ot-var.cc harfbuzz/hb-set.cc harfbuzz/hb-shape.cc harfbuzz/hb-shape-plan.cc harfbuzz/hb-shaper.cc harfbuzz/hb-static.cc harfbuzz/hb-ucdn.cc harfbuzz/hb-unicode.cc harfbuzz/hb-warning.cc
+ 
+ LIBFONTMANAGER_CFLAGS += $(HARFBUZZ_CFLAGS)
++LIBFONTMANAGER_CFLAGS += $(shell pkg-config --cflags harfbuzz)
++BUILD_LIBFONTMANAGER_FONTLIB += -lharfbuzz
++endif
+ 
+ #### End harfbuzz configuration
+ 
+ LIBFONTMANAGER_EXTRA_HEADER_DIRS := \
+-    libfontmanager/harfbuzz \
+-    libfontmanager/harfbuzz/hb-ucdn \
+     common/awt \
+     common/font \
+     libawt/java2d \
+     libawt/java2d/pipe \
+     libawt/java2d/loops \
+     #
++ifeq ($(HARFBUZZ_TO_USE), bundled)
++LIBFONTMANAGER_EXTRA_HEADER_DIRS += \
++    libfontmanager/harfbuzz \
++    libfontmanager/harfbuzz/hb-ucdn
++    #
++endif
+ 
+ LIBFONTMANAGER_CFLAGS += $(LIBFREETYPE_CFLAGS)
+ BUILD_LIBFONTMANAGER_FONTLIB += $(LIBFREETYPE_LIBS)

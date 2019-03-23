@@ -15,7 +15,7 @@
 
 Name:		java-12-openjdk
 Version:	12.33
-Release:	3
+Release:	4
 Summary:	Java Runtime Environment (JRE) %{major}
 Group:		Development/Languages
 License:	GPLv2, ASL 1.1, ASL 2.0, LGPLv2.1
@@ -81,6 +81,11 @@ BuildRequires:	java-%{oldmajor}-openjdk-devel
 # cacerts build requirement.
 BuildRequires:	openssl
 
+%if %{with system_jdk}
+Provides:	jre-current = %{EVRD}
+Provides:	java-current = %{EVRD}
+%endif
+
 # For compatibility with JPackage/Fedora/Mageia packaging
 Provides:	java-%{major}-openjdk-headless = %{EVRD}
 Provides:	java-openjdk-headless = %{EVRD}
@@ -92,6 +97,10 @@ OpenJDK Java runtime and development environment
 %package gui
 Summary:	Graphical user interface libraries for OpenJDK %{major}
 Group:		Development/Languages
+%if %{with system_jdk}
+Provides:	jre-gui-current = %{EVRD}
+Provides:	java-gui-current = %{EVRD}
+%endif
 # For compatibility with JPackage/Fedora/Mageia packaging
 Provides:	java-%{major}-openjdk = %{EVRD}
 Provides:	java-openjdk = %{EVRD}
@@ -103,6 +112,10 @@ Graphical user interface libraries for OpenJDK %{major}
 %package devel
 Summary:	Java Development Kit (JDK) %{major}
 Group:		Development/Languages
+%if %{with system_jdk}
+Provides:	jdk-current = %{EVRD}
+Provides:	java-current-devel = %{EVRD}
+%endif
 # For compatibility with JPackage/Fedora/Mageia packaging
 Provides:	java-openjdk-devel = %{EVRD}
 Provides:	java-devel = %{EVRD}
@@ -193,8 +206,14 @@ make bootcycle-images all docs
 %install
 mkdir -p %{buildroot}%{_jvmdir}
 cp -a build/images/jdk %{buildroot}%{_jvmdir}/java-%{major}-openjdk
+ln -s java-%{major}-openjdk %{buildroot}%{_jvmdir}/jre-%{major}-openjdk
 
 %if %{with system_jdk}
+ln -s java-%{major}-openjdk %{buildroot}%{_jvmdir}/java-openjdk
+ln -s java-%{major}-openjdk %{buildroot}%{_jvmdir}/java
+ln -s java-%{major}-openjdk %{buildroot}%{_jvmdir}/jre-openjdk
+ln -s java-%{major}-openjdk %{buildroot}%{_jvmdir}/jre
+
 mkdir -p %{buildroot}%{_mandir}
 mv %{buildroot}%{_jvmdir}/java-%{major}-openjdk/man/* %{buildroot}%{_mandir}
 rmdir %{buildroot}%{_jvmdir}/java-%{major}-openjdk/man
@@ -214,6 +233,10 @@ chmod +x %{buildroot}%{_sysconfdir}/profile.d/*.*sh
 %files
 %if %{with system_jdk}
 %dir %{_jvmdir}
+%{_jvmdir}/java
+%{_jvmdir}/java-openjdk
+%{_jvmdir}/jre
+%{_jvmdir}/jre-openjdk
 %endif
 %dir %{_jvmdir}/java-%{major}-openjdk/bin
 %dir %{_jvmdir}/java-%{major}-openjdk/conf
@@ -295,6 +318,7 @@ chmod +x %{buildroot}%{_sysconfdir}/profile.d/*.*sh
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/java.transaction.xa
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/java.xml.crypto
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/java.xml
+%{_jvmdir}/jre-%{major}-openjdk
 %if %{with system_jdk}
 %{_mandir}/man1/java.1*
 %{_mandir}/man1/jjs.1*

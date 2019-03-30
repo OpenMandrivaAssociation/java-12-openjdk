@@ -342,7 +342,9 @@ chmod +x %{buildroot}%{_sysconfdir}/profile.d/*.*sh
 
 %files devel
 %{_jvmdir}/java-%{major}-openjdk/include
+%ifnarch %{ix86}
 %{_jvmdir}/java-%{major}-openjdk/bin/jaotc
+%endif
 %{_jvmdir}/java-%{major}-openjdk/bin/jar
 %{_jvmdir}/java-%{major}-openjdk/bin/jarsigner
 %{_jvmdir}/java-%{major}-openjdk/bin/javac
@@ -393,7 +395,9 @@ chmod +x %{buildroot}%{_sysconfdir}/profile.d/*.*sh
 %{_mandir}/man1/unpack200.1*
 %endif
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/jdk.accessibility
+%ifnarch %{ix86}
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/jdk.aot
+%endif
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/jdk.attach
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/jdk.charsets
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/jdk.compiler
@@ -407,9 +411,11 @@ chmod +x %{buildroot}%{_sysconfdir}/profile.d/*.*sh
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/jdk.internal.jvmstat
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/jdk.internal.le
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/jdk.internal.opt
+%ifnarch %{ix86}
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/jdk.internal.vm.ci
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/jdk.internal.vm.compiler.management
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/jdk.internal.vm.compiler
+%endif
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/jdk.jartool
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/jdk.javadoc
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/jdk.jcmd

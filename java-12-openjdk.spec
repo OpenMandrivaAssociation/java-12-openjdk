@@ -15,7 +15,7 @@
 
 Name:		java-12-openjdk
 Version:	12.33
-Release:	4
+Release:	5
 Summary:	Java Runtime Environment (JRE) %{major}
 Group:		Development/Languages
 License:	GPLv2, ASL 1.1, ASL 2.0, LGPLv2.1
@@ -101,6 +101,7 @@ Group:		Development/Languages
 Provides:	jre-gui-current = %{EVRD}
 Provides:	java-gui-current = %{EVRD}
 %endif
+Requires:	%{name} = %{EVRD}
 # For compatibility with JPackage/Fedora/Mageia packaging
 Provides:	java-%{major}-openjdk = %{EVRD}
 Provides:	java-openjdk = %{EVRD}
@@ -116,6 +117,8 @@ Group:		Development/Languages
 Provides:	jdk-current = %{EVRD}
 Provides:	java-current-devel = %{EVRD}
 %endif
+Requires:	%{name} = %{EVRD}
+Suggests:	%{name}-gui = %{EVRD}
 # For compatibility with JPackage/Fedora/Mageia packaging
 Provides:	java-openjdk-devel = %{EVRD}
 Provides:	java-devel = %{EVRD}

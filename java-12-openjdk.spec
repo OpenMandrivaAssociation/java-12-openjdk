@@ -145,6 +145,12 @@ EXTRA_CXXFLAGS="$EXTRA_CXXFLAGS -mincoming-stack-boundary=2"
 %endif
 export CC=gcc
 export CXX=g++
+%else
+%ifarch %{ix86}
+# https://bugs.openjdk.java.net/browse/JDK-8199936
+EXTRA_CFLAGS="$EXTRA_CFLAGS -mstack-alignment=16"
+EXTRA_CXXFLAGS="$EXTRA_CXXFLAGS -mstack-alignment=16"
+%endif
 %endif
 
 NUM_PROC="$(getconf _NPROCESSORS_ONLN)"

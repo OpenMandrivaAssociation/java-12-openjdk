@@ -7,22 +7,23 @@
 %global _jvmdir %{_prefix}/lib/jvm
 
 %define major %(echo %{version} |cut -d. -f1)
-%define minor %(echo %{version} |cut -d. -f2)
+%define ver %(echo %{version} |rev |cut -d. -f2- |rev)
+%define minor %(echo %{version} |rev |cut -d. -f1 |rev)
 # OpenJDK X requires OpenJDK >= X-1 to build -- so we need
 # to determine the previous version to get build dependencies
 # right
 %define oldmajor %(echo $((%{major}-1)))
 
 Name:		java-12-openjdk
-Version:	12.33
-Release:	6
+Version:	12.0.1.ga
+Release:	1
 Summary:	Java Runtime Environment (JRE) %{major}
 Group:		Development/Languages
 License:	GPLv2, ASL 1.1, ASL 2.0, LGPLv2.1
 URL:		http://openjdk.java.net/
 # Source must be packages from upstream's hg repositories using the
 # update_package.sh script
-Source0:	jdk-jdk%{major}-jdk-%{major}+%{minor}.tar.xz
+Source0:	jdk-updates-jdk%{major}u-jdk-%{ver}-%{minor}.tar.xz
 # Extra tests
 Source50:	TestCryptoLevel.java
 Source51:	TestECDSA.java

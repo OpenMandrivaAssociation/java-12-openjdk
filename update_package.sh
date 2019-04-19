@@ -32,16 +32,17 @@ else
   echo ${TAPSET}
 fi
 
-# This will almost always be "jdk" -- unless you're checking out a special
-# branch such as (now obsolete) shenandoah
-export PROJECT_NAME="jdk"
+# This will almost always be "jdk" or "jdk-updates" --
+# unless you're checking out a special branch such as
+# (now obsolete) shenandoah
+export PROJECT_NAME="jdk-updates"
 # Current tree -- will update to 13 at some point, see
 # http://hg.openjdk.java.net/jdk/
 # for current options
-export REPO_NAME="jdk12"
+export REPO_NAME="jdk12u"
 # For latest tag, see http://hg.openjdk.java.net/jdk/jdk12/tags
 # Or for Shenandoah branch, http://hg.openjdk.java.net/shenandoah/jdk12/tags
-export VERSION="jdk-12+33"
+export VERSION="jdk-12.0.1-ga"
 export COMPRESSION=xz
 # unset tapsets overrides
 export OPENJDK_URL=""

@@ -102,7 +102,12 @@ Group:		Development/Languages
 Provides:	jre-gui-current = %{EVRD}
 Provides:	java-gui-current = %{EVRD}
 %endif
-Requires:	%{name} = %{EVRD}
+# We really need to require %{name} = %{EVRD}, but this gets
+# messed up by the compatibility provides below
+# (java-%{major}-openjdk == %{name})
+# So we have to require one of the compatibility provides of
+# the main package instead.
+Requires:	java-%{major}-openjdk-headless = 1:%{version}-%{release}
 # For compatibility with JPackage/Fedora/Mageia packaging
 Provides:	java-%{major}-openjdk = %{EVRD}
 Provides:	java-openjdk = %{EVRD}

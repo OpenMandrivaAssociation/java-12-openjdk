@@ -1,6 +1,10 @@
 # Use gcc instead of clang
 %bcond_without gcc
 %bcond_without system_jdk
+# Without bootstrap, the package BuildRequires
+# rpm-javamacros (which in turn requires this package)
+# so jmod(*) and java(*) Provides: can be generated correctly.
+%bcond_with bootstrap
 
 # OpenJDK builds a lot of underlinked libraries and tools...
 %global _disable_ld_no_undefined 1
@@ -16,7 +20,7 @@
 
 Name:		java-12-openjdk
 Version:	12.0.1.ga
-Release:	1
+Release:	2
 Summary:	Java Runtime Environment (JRE) %{major}
 Group:		Development/Languages
 License:	GPLv2, ASL 1.1, ASL 2.0, LGPLv2.1
@@ -86,6 +90,9 @@ BuildRequires:	openssl
 Provides:	jre-current = %{EVRD}
 Provides:	java-current = %{EVRD}
 %endif
+%if ! %{with bootstrap}
+BuildRequires:	rpm-javamacros
+%endif
 
 # For compatibility with JPackage/Fedora/Mageia packaging
 Provides:	java-%{major}-openjdk-headless = 1:%{version}-%{release}
@@ -123,6 +130,7 @@ Group:		Development/Languages
 Provides:	jdk-current = %{EVRD}
 Provides:	java-current-devel = %{EVRD}
 %endif
+Requires:	rpm-javamacros
 Requires:	%{name} = %{EVRD}
 Suggests:	%{name}-gui = %{EVRD}
 # For compatibility with JPackage/Fedora/Mageia packaging

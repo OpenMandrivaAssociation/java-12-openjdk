@@ -350,7 +350,13 @@ chmod +x %{buildroot}%{_sysconfdir}/profile.d/*.*sh
 %{_mandir}/man1/rmiregistry.1*
 %{_sysconfdir}/profile.d/*
 %else
-%{_jvmdir}/java-%{major}-openjdk/man
+%dir %{_jvmdir}/java-%{major}-openjdk/man
+%dir %{_jvmdir}/java-%{major}-openjdk/man/man1
+%{_jvmdir}/java-%{major}-openjdk/man/man1/java.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/jjs.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/keytool.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/rmid.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/rmiregistry.1*
 %endif
 
 %files gui
@@ -413,6 +419,27 @@ chmod +x %{buildroot}%{_sysconfdir}/profile.d/*.*sh
 %{_mandir}/man1/rmic.1*
 %{_mandir}/man1/serialver.1*
 %{_mandir}/man1/unpack200.1*
+%else
+%{_jvmdir}/java-%{major}-openjdk/man/man1/jar.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/jarsigner.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/javac.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/javadoc.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/javap.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/jcmd.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/jconsole.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/jdb.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/jdeps.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/jinfo.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/jmap.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/jps.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/jrunscript.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/jstack.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/jstat.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/jstatd.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/pack200.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/rmic.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/serialver.1*
+%{_jvmdir}/java-%{major}-openjdk/man/man1/unpack200.1*
 %endif
 %doc %{_jvmdir}/java-%{major}-openjdk/legal/jdk.accessibility
 %ifnarch %{ix86} %{arm}

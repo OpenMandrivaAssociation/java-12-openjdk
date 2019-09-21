@@ -350,7 +350,7 @@ chmod +x %{buildroot}%{_sysconfdir}/profile.d/*.*sh
 %{_mandir}/man1/rmiregistry.1*
 %{_sysconfdir}/profile.d/*
 %else
-%dir %{_jvmdir}/java-%{major}-openjdk/man
+%{_jvmdir}/java-%{major}-openjdk/man
 %endif
 
 %files gui

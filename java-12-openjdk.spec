@@ -216,6 +216,10 @@ fi
 
 
 %build
+# YYYYYYYUUUUUCCCCCCCKKKKKK! The build process really needs more than
+# 1024 files open at the same time!
+ulimit -Sn 65536
+
 # With LTO enabled, /tmp (tmpfs) tends to run out of space.
 # Temporary LTO files for openjdk 12 easily take 50+ GB.
 # Hopefully the build directory has more free space.
@@ -224,6 +228,11 @@ export TMPDIR="$(pwd)/compilertemp"
 
 cd build
 # We intentionally don't use %%make_build - OpenJDK doesn't like -j at all
+# Immensely ugly, but effective, workaround for make randomly messing up
+# build order...
+for i in `seq 0 100`; do
+	make bootcycle-images all docs && break || :
+done
 make bootcycle-images all docs
 
 %install

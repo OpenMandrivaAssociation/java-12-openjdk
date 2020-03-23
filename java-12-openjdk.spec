@@ -4,7 +4,7 @@
 # Without bootstrap, the package BuildRequires
 # rpm-javamacros (which in turn requires this package)
 # so jmod(*) and java(*) Provides: can be generated correctly.
-%bcond_without bootstrap
+%bcond_with bootstrap
 
 # OpenJDK builds a lot of underlinked libraries and tools...
 %global _disable_ld_no_undefined 1
@@ -19,8 +19,8 @@
 %define oldmajor %(echo $((%{major}-1)))
 
 Name:		java-12-openjdk
-Version:	12.0.1.ga
-Release:	5
+Version:	12.0.2.ga
+Release:	1
 Summary:	Java Runtime Environment (JRE) %{major}
 Group:		Development/Languages
 License:	GPLv2, ASL 1.1, ASL 2.0, LGPLv2.1
@@ -41,12 +41,15 @@ Patch2:		https://src.fedoraproject.org/rpms/java-openjdk/raw/master/f/rh1648644-
 Patch3:		https://src.fedoraproject.org/rpms/java-openjdk/raw/master/f/rh649512-remove_uses_of_far_in_jpeg_libjpeg_turbo_1_4_compat_for_jdk10_and_up.patch
 Patch4:		https://src.fedoraproject.org/rpms/java-openjdk/raw/master/f/pr3183-rh1340845-support_fedora_rhel_system_crypto_policy.patch
 Patch5:		https://src.fedoraproject.org/rpms/java-openjdk/raw/master/f/pr1983-rh1565658-support_using_the_system_installation_of_nss_with_the_sunec_provider_jdk11.patch
+# From upstream
+Patch100:	https://github.com/openjdk/panama-foreign/commit/af5c725b.patch
 # Patches from OpenMandriva
 Patch1000:	openjdk-11-fix-aarch64.patch
 Patch1001:	openjdk-11-clang-bug-40543.patch
 Patch1002:	java-12-compile.patch
 Patch1003:	java-12-buildfix.patch
 Patch1004:	openjdk-12-system-harfbuzz.patch
+Patch1005:	openjdk-14-gcc10.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	binutils
@@ -172,6 +175,14 @@ EXTRA_CXXFLAGS="$EXTRA_CXXFLAGS -mstack-alignment=16"
 
 NUM_PROC="$(getconf _NPROCESSORS_ONLN)"
 [ -z "$NUM_PROC" ] && NUM_PROC=8
+
+%if %{with gcc}
+export NM=gcc-nm
+export AR=gcc-ar
+%else
+export NM=llvm-nm
+export AR=llvm-ar
+%endif
 
 mkdir build
 cd build

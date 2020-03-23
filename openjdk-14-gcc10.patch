@@ -1,0 +1,85 @@
+diff -up openjdk/src/java.base/unix/native/libjava/childproc.c.omv~ openjdk/src/java.base/unix/native/libjava/childproc.c
+--- openjdk/src/java.base/unix/native/libjava/childproc.c.omv~	2020-03-20 19:13:10.789394419 +0100
++++ openjdk/src/java.base/unix/native/libjava/childproc.c	2020-03-20 19:17:55.903839258 +0100
+@@ -33,6 +33,7 @@
+ 
+ #include "childproc.h"
+ 
++const char * const *parentPathv = 0;
+ 
+ ssize_t
+ restartableWrite(int fd, const void *buf, size_t count)
+diff -up openjdk/src/java.base/unix/native/libjava/childproc.h.omv~ openjdk/src/java.base/unix/native/libjava/childproc.h
+--- openjdk/src/java.base/unix/native/libjava/childproc.h.omv~	2020-03-20 19:12:03.619190997 +0100
++++ openjdk/src/java.base/unix/native/libjava/childproc.h	2020-03-20 19:12:43.506317294 +0100
+@@ -126,7 +126,7 @@ typedef struct _SpawnInfo {
+  * The cached and split version of the JDK's effective PATH.
+  * (We don't support putenv("PATH=...") in native code)
+  */
+-const char * const *parentPathv;
++extern const char * const *parentPathv;
+ 
+ ssize_t restartableWrite(int fd, const void *buf, size_t count);
+ int restartableDup2(int fd_from, int fd_to);
+diff -up openjdk/src/java.security.jgss/share/native/libj2gss/NativeFunc.c.omv~ openjdk/src/java.security.jgss/share/native/libj2gss/NativeFunc.c
+--- openjdk/src/java.security.jgss/share/native/libj2gss/NativeFunc.c.omv~	2020-03-20 19:19:20.428873044 +0100
++++ openjdk/src/java.security.jgss/share/native/libj2gss/NativeFunc.c	2020-03-20 19:19:29.721874645 +0100
+@@ -27,6 +27,8 @@
+ #include <stdlib.h>
+ #include "NativeFunc.h"
+ 
++GSS_FUNCTION_TABLE_PTR ftab = 0;
++
+ /* standard GSS method names (ordering is from mapfile) */
+ static const char RELEASE_NAME[]                = "gss_release_name";
+ static const char IMPORT_NAME[]                 = "gss_import_name";
+diff -up openjdk/src/java.security.jgss/share/native/libj2gss/NativeFunc.h.omv~ openjdk/src/java.security.jgss/share/native/libj2gss/NativeFunc.h
+--- openjdk/src/java.security.jgss/share/native/libj2gss/NativeFunc.h.omv~	2020-03-20 19:19:06.776869969 +0100
++++ openjdk/src/java.security.jgss/share/native/libj2gss/NativeFunc.h	2020-03-20 19:19:19.002872764 +0100
+@@ -277,6 +277,6 @@ typedef struct GSS_FUNCTION_TABLE {
+ typedef GSS_FUNCTION_TABLE *GSS_FUNCTION_TABLE_PTR;
+ 
+ /* global GSS function table */
+-GSS_FUNCTION_TABLE_PTR ftab;
++extern GSS_FUNCTION_TABLE_PTR ftab;
+ 
+ #endif
+diff -up openjdk/src/jdk.sctp/unix/native/libsctp/Sctp.h.omv~ openjdk/src/jdk.sctp/unix/native/libsctp/Sctp.h
+--- openjdk/src/jdk.sctp/unix/native/libsctp/Sctp.h.omv~	2020-03-20 19:19:49.953876786 +0100
++++ openjdk/src/jdk.sctp/unix/native/libsctp/Sctp.h	2020-03-20 19:21:24.336864303 +0100
+@@ -322,12 +322,12 @@ typedef int sctp_peeloff_func(int sock,
+ 
+ #endif /* __linux__ */
+ 
+-sctp_getladdrs_func* nio_sctp_getladdrs;
+-sctp_freeladdrs_func* nio_sctp_freeladdrs;
+-sctp_getpaddrs_func* nio_sctp_getpaddrs;
+-sctp_freepaddrs_func* nio_sctp_freepaddrs;
+-sctp_bindx_func* nio_sctp_bindx;
+-sctp_peeloff_func* nio_sctp_peeloff;
++extern sctp_getladdrs_func* nio_sctp_getladdrs;
++extern sctp_freeladdrs_func* nio_sctp_freeladdrs;
++extern sctp_getpaddrs_func* nio_sctp_getpaddrs;
++extern sctp_freepaddrs_func* nio_sctp_freepaddrs;
++extern sctp_bindx_func* nio_sctp_bindx;
++extern sctp_peeloff_func* nio_sctp_peeloff;
+ 
+ jboolean loadSocketExtensionFuncs(JNIEnv* env);
+ 
+diff -up openjdk/src/jdk.sctp/unix/native/libsctp/SctpNet.c.omv~ openjdk/src/jdk.sctp/unix/native/libsctp/SctpNet.c
+--- openjdk/src/jdk.sctp/unix/native/libsctp/SctpNet.c.omv~	2020-03-20 19:20:08.654877178 +0100
++++ openjdk/src/jdk.sctp/unix/native/libsctp/SctpNet.c	2020-03-20 19:21:41.494858385 +0100
+@@ -37,6 +37,13 @@
+ #include "sun_nio_ch_sctp_SctpNet.h"
+ #include "sun_nio_ch_sctp_SctpStdSocketOption.h"
+ 
++sctp_getladdrs_func* nio_sctp_getladdrs = 0;
++sctp_freeladdrs_func* nio_sctp_freeladdrs = 0;
++sctp_getpaddrs_func* nio_sctp_getpaddrs = 0;
++sctp_freepaddrs_func* nio_sctp_freepaddrs = 0;
++sctp_bindx_func* nio_sctp_bindx = 0;
++sctp_peeloff_func* nio_sctp_peeloff = 0;
++
+ static jclass isaCls = 0;
+ static jmethodID isaCtrID = 0;
+ 
